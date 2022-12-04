@@ -17,3 +17,5 @@ def part_two(input_line: list[str]) -> int:
 if __name__ == "__main__":
     input_lines = read_input_lines()
     print(input_lines)
+    print(part_one(input_lines))
+    print(part_two(input_lines))

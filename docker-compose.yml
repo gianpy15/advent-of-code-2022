@@ -6,6 +6,6 @@ services:
     build: .
     volumes:
       - ".:/code"
-      - "~/.ssh:/home/app/.ssh"
+      - "~/.ssh:/root/.ssh"
       # so that packages are not redownloaded every time, even if we recreate the container
-      - "~/.cache:/home/app/.cache"
+      - "~/.cache:/root/.cache"

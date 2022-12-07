@@ -5,6 +5,7 @@ def read_input_lines() -> list[str]:
     file_path = Path(__file__).parent / "input.txt"
     return file_path.read_text().splitlines()
 
+
 def process_input(input_lines: list[str]) -> list[int]:
     input_lines = read_input_lines()
     inputs = [0]
@@ -16,11 +17,9 @@ def process_input(input_lines: list[str]) -> list[int]:
     return inputs
 
 
-
 if __name__ == "__main__":
     input_lines = read_input_lines()
     inputs = process_input(input_lines)
-    
+
     print(max(inputs))
     print(sum(sorted(inputs, reverse=True)[:3]))
-

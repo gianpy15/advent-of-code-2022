@@ -24,9 +24,11 @@ outcomes_2 = {
     ("C", "Z"): 1 + 6,
 }
 
+
 def read_input_lines() -> list[str]:
     file_path = Path(__file__).parent / "input.txt"
     return file_path.read_text().splitlines()
+
 
 def part_one(input_lines) -> int:
     return sum(outcomes[tuple(line.split(" "))] for line in input_lines)

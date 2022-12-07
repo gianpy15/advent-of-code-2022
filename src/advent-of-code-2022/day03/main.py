@@ -11,8 +11,8 @@ def get_ord(char: str) -> int:
 
 
 def map_line(line) -> int:
-    part1 = line[:len(line) // 2]
-    part2 = line[len(line) // 2:]
+    part1 = line[: len(line) // 2]
+    part2 = line[len(line) // 2 :]
 
     print(line, " . ", part1, " . ", part2)
 
@@ -30,11 +30,13 @@ def find_common(lines: list[str]) -> str:
         if elem in lines[1] and elem in lines[2]:
             return elem
 
+
 def part_two(input_line: list[str]) -> int:
-    badges = [find_common(input_lines[i : i + 3]) for i in range(0, len(input_lines), 3)]
+    badges = [
+        find_common(input_lines[i : i + 3]) for i in range(0, len(input_lines), 3)
+    ]
 
     return sum(get_ord(x) for x in badges)
-
 
 
 if __name__ == "__main__":

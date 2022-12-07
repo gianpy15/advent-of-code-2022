@@ -22,7 +22,7 @@ clean: ## Clean the repository
 
 .PHONY: run
 run:
-	python $(prefix)/main.py
+	poetry run python $(prefix)/main.py
 
 .PHONY: new-day
 new-day:

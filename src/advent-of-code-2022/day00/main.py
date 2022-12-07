@@ -9,9 +9,9 @@ def read_input_lines() -> list[str]:
 def part_one(input_line: list[str]) -> int:
     pass
 
+
 def part_two(input_line: list[str]) -> int:
     pass
-
 
 
 if __name__ == "__main__":

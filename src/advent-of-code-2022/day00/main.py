@@ -6,11 +6,11 @@ def read_input_lines() -> list[str]:
     return file_path.read_text().splitlines()
 
 
-def part_one(input_line: list[str]) -> int:
+def part_one(input_lines: list[str]) -> int:
     pass
 
 
-def part_two(input_line: list[str]) -> int:
+def part_two(input_lines: list[str]) -> int:
     pass
 
 

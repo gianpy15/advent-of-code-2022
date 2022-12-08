@@ -1,10 +1,12 @@
 from pathlib import Path
+
 from pydantic import BaseModel
+
 
 class Movement(BaseModel):
     move: str
     movements: int
-    from_ : str
+    from_: str
     start: int
     to: str
     end: int
@@ -23,7 +25,16 @@ def read_input_lines() -> list[str]:
         elif line == "":
             has_read_map = True
         else:
-            movements.append(Movement(**dict(zip(["move", "movements", "from_", "start", "to", "end"], line.split(' ')))))
+            movements.append(
+                Movement(
+                    **dict(
+                        zip(
+                            ["move", "movements", "from_", "start", "to", "end"],
+                            line.split(" "),
+                        )
+                    )
+                )
+            )
 
     for line in map_[:-1]:
         for idx in range(0, len(map_[0]), 4):
@@ -41,13 +52,13 @@ def part_one(stacks: list[list[str]], movements: list[Movement]) -> str:
             stacks[movement.end - 1].append(element)
     return "".join([x[-1] for x in stacks])
 
+
 def part_two(stacks: list[list[str]], movements: list[Movement]) -> str:
     for movement in movements:
-        elements = stacks[movement.start - 1][-movement.movements:]
-        stacks[movement.start - 1] = stacks[movement.start - 1][:-movement.movements]
+        elements = stacks[movement.start - 1][-movement.movements :]
+        stacks[movement.start - 1] = stacks[movement.start - 1][: -movement.movements]
         stacks[movement.end - 1] += elements
     return "".join([x[-1] for x in stacks])
-
 
 
 if __name__ == "__main__":

@@ -1,6 +1,5 @@
 SRC_DIR		= src
-TEST_DIR	= tests
-CHECK_DIRS = $(SRC_DIR) $(TEST_DIR)
+CHECK_DIRS = $(SRC_DIR)
 DOCS_DIR 	= docs
 path = src/advent-of-code-2022
 prefix = $(path)/day$(shell date +%d)

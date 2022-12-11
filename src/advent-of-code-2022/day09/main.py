@@ -1,11 +1,15 @@
 from __future__ import annotations
+
 from pathlib import Path
-from pydantic import BaseModel
+
 import numpy as np
+from pydantic import BaseModel
+
 
 class Movement(BaseModel):
     direction: str
     steps: int
+
 
 class Point(BaseModel):
     name: str
@@ -17,7 +21,6 @@ class Point(BaseModel):
     @property
     def length(self) -> int:
         return 1 + self.tail.length if self.tail else 1
-        
 
     def move(self, direction: Movement):
         for _ in range(direction.steps):
@@ -58,18 +61,21 @@ class Point(BaseModel):
 
     def plot(self):
         mappa = np.ones((1000, 1000), dtype=str)
-        mappa[mappa=="1"] = "."
+        mappa[mappa == "1"] = "."
         for x, y in self.visited:
             mappa[y + 500, x + 500] = "#"
-        
+
         with (Path(__file__).parent / "output.txt").open("w") as fp:
             for line in mappa:
                 fp.write("".join(line) + "\n")
-        
+
 
 def read_input_lines() -> list[Movement]:
     file_path = Path(__file__).parent / "input.txt"
-    return [Movement(**dict(zip(["direction", "steps"], mov.split()))) for mov in file_path.read_text().splitlines()]
+    return [
+        Movement(**dict(zip(["direction", "steps"], mov.split())))
+        for mov in file_path.read_text().splitlines()
+    ]
 
 
 def part_one(movements: list[Movement]) -> int:
@@ -78,7 +84,6 @@ def part_one(movements: list[Movement]) -> int:
     for movement in movements:
         head.move(movement)
     return len(tail.visited)
-
 
 
 def part_two(movements: list[Movement]) -> int:
@@ -90,7 +95,7 @@ def part_two(movements: list[Movement]) -> int:
         curr_tail = tail
     for movement in movements:
         head.move(movement)
-    
+
     while head.tail:
         head = head.tail
     head.plot()

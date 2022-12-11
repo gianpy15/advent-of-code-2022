@@ -32,7 +32,9 @@ def part_one(input_lines: list[str]) -> int:
 
 def draw(vals: list[list[str]], clock, start_sprite) -> list[list[str]]:
     print(clock)
-    if clock in range((clock // 40) * 40 + start_sprite, (clock // 40) * 40 + start_sprite + 3):
+    if clock in range(
+        (clock // 40) * 40 + start_sprite, (clock // 40) * 40 + start_sprite + 3
+    ):
         vals[clock] = "#"
     return vals
 

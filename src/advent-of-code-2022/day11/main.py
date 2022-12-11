@@ -1,9 +1,12 @@
 from __future__ import annotations
-from pathlib import Path
-from pydantic import BaseModel
+
 import operator
+from functools import reduce
+from pathlib import Path
 from typing import Callable
+
 import numpy as np
+from pydantic import BaseModel
 
 
 class Monkey(BaseModel):
@@ -34,17 +37,21 @@ class Monkey(BaseModel):
     def better_inspect(self, monkeys: dict[str, Monkey]):
         self.starting_items += self.items
         self.items.clear()
+        factor = reduce(
+            operator.mul, [monkey.divisibility_test for monkey in monkeys.values()], 1
+        )
         for item in self.starting_items:
             self.inspections += 1
             item = self.operation(self.left_operand or item, self.right_operand or item)
             if item % self.divisibility_test == 0:
-                monkeys[self.true].items.append(item)
+                monkeys[self.true].items.append(item % factor)
             else:
-                monkeys[self.false].items.append(item)
+                monkeys[self.false].items.append(item % factor)
         self.starting_items.clear()
 
     def __str__(self) -> str:
         return f"Monkey {self.index}: {self.inspections}, [{', '.join(str(item) for item in self.items)}]"
+
 
 def read_input_lines(monkeys: dict[str, Monkey]) -> dict[str, Monkey]:
     file_path = Path(__file__).parent / "input.txt"
@@ -66,7 +73,9 @@ def read_input_lines(monkeys: dict[str, Monkey]) -> dict[str, Monkey]:
                     current_monkey.right_operand = int(right)
                 except ValueError:
                     current_monkey.right_operand = None
-                current_monkey.operation = operator.add if operand == "+" else operator.mul
+                current_monkey.operation = (
+                    operator.add if operand == "+" else operator.mul
+                )
             case ["Test", "divisible", "by", value]:
                 current_monkey.divisibility_test = int(value)
             case ["If", "true", "throw", "to", "monkey", index]:
@@ -81,19 +90,21 @@ def part_one(monkeys: dict[str, Monkey]) -> int:
     for _ in range(20):
         for monkey in monkeys.values():
             monkey.inspect(monkeys)
-        
-    sorted_monkeys = sorted(list(monkeys.values()), key=lambda monkey: monkey.inspections, reverse=True)
+
+    sorted_monkeys = sorted(
+        list(monkeys.values()), key=lambda monkey: monkey.inspections, reverse=True
+    )
     return sorted_monkeys[0].inspections * sorted_monkeys[1].inspections
 
 
 def part_two(monkeys: dict[str, Monkey]) -> int:
-    for _ in range(1000):
+    for _ in range(10000):
         for monkey in monkeys.values():
             monkey.better_inspect(monkeys)
-        
-    sorted_monkeys = sorted(list(monkeys.values()), key=lambda monkey: monkey.inspections, reverse=True)
-    for monkey in monkeys.values():
-        print(monkey)
+
+    sorted_monkeys = sorted(
+        list(monkeys.values()), key=lambda monkey: monkey.inspections, reverse=True
+    )
     return sorted_monkeys[0].inspections * sorted_monkeys[1].inspections
 
 
@@ -101,4 +112,5 @@ if __name__ == "__main__":
     monkeys: dict[str, Monkey] = {}
     monkeys = read_input_lines(monkeys)
     print(part_one(monkeys))
+    monkeys = read_input_lines(monkeys)
     print(part_two(monkeys))

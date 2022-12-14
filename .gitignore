@@ -54,3 +54,4 @@ dmypy.json
 
 # VSCode
 .vscode
+**/.DS_Store
